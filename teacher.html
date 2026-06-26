@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>职业价值观取舍互动｜教师端</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <small>教师端｜实时汇总</small>
+      <h1 id="teacherTitle">从书信谈选择：职业价值观取舍互动</h1>
+      <p>学生扫码完成四轮取舍后，本页自动生成班级职业价值观词云、柱状统计和提交明细。</p>
+    </section>
+
+    <div class="grid">
+      <section class="card span-7">
+        <h2>课堂场次与学生入口</h2>
+        <p class="hint">建议每次课程设置不同场次ID，例如：tju-2026-final。学生链接可提前放入PPT。</p>
+        <label style="display:block;margin-top:12px;font-weight:800;">场次ID</label>
+        <div class="toolbar" style="margin-top:8px;">
+          <input id="classInput" style="max-width:360px;" />
+          <button onclick="setClass()">切换场次</button>
+          <button class="secondary" onclick="loadData()">立即刷新</button>
+        </div>
+        <label style="display:block;margin-top:16px;font-weight:800;">学生端链接</label>
+        <div class="toolbar" style="margin-top:8px;">
+          <input id="studentUrl" readonly />
+          <button class="secondary" onclick="copyStudentUrl()">复制链接</button>
+        </div>
+        <div id="configNotice" class="notice" style="display:none;">当前未配置 Supabase，教师端处于单机预览模式。正式课堂使用前，请在 config.js 中填写 Supabase 项目地址和 anon key。</div>
+      </section>
+
+      <section class="card span-5" style="text-align:center;">
+        <h2>学生扫码入口</h2>
+        <img id="qrImg" class="qr" alt="学生端二维码" />
+        <p class="hint">若二维码无法显示，可直接复制学生端链接给学生。</p>
+      </section>
+
+      <section class="card span-4">
+        <h3>参与人数</h3>
+        <div class="stat-number" id="participantCount">0</div>
+        <p class="hint" id="statusText">等待同步</p>
+      </section>
+
+      <section class="card span-4">
+        <h3>当前最高频价值锚点</h3>
+        <div class="stat-number" id="topChoice" style="font-size:28px;">暂无</div>
+        <p class="hint">用于课堂追问：为什么这个词成为班级共同选择？</p>
+      </section>
+
+      <section class="card span-4">
+        <h3>课堂操作</h3>
+        <div class="toolbar">
+          <button onclick="exportCsv()">导出CSV</button>
+          <button class="warning" onclick="resetClass()">清空本场</button>
+        </div>
+        <p class="hint">建议比赛前先用测试场次演练，正式展示时再切换到正式场次。</p>
+      </section>
+
+      <section class="card span-7">
+        <h2>班级职业价值观词云</h2>
+        <div id="wordCloud" class="wordcloud"></div>
+      </section>
+
+      <section class="card span-5">
+        <h2>最终保留项统计</h2>
+        <div id="barList" class="bar-list"></div>
+      </section>
+
+      <section class="card span-12">
+        <h2>提交明细</h2>
+        <div id="dataTable" class="table-wrap"></div>
+      </section>
+    </div>
+    <div class="footer">天津大学｜职业价值观课程思政互动H5</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/teacher.js"></script>
+</body>
+</html>
